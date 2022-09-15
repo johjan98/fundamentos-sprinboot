@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -53,18 +54,29 @@ public class FundamentosApplication implements CommandLineRunner {
 	public void run(String... args) {
 		//classExamples();
 		saveUsersInDataBase();
+		getInformationJpqlFromUser();
+	}
+
+	private void getInformationJpqlFromUser(){
+		logger.info("User: " +
+						userRepository.findByUserEmail("daniela@domain.com")
+						.orElseThrow(()-> new RuntimeException("No se encontro el usuario")));
+
+		userRepository.findAndSort("user", Sort.by("id")
+						.descending())
+						.forEach(user -> logger.info("Usuario usando sort: " + user));
 	}
 
 	private void saveUsersInDataBase(){
 		User user1 = new User("Johjan", "johjan@email.com", LocalDate.of(1998,8,22));
 		User user2 = new User("Stiven", "stiven@email.com", LocalDate.of(1998,9,12));
 		User user3 = new User("Daniela", "daniela@domain.com", LocalDate.of(2021, 9, 8));
-		User user4 = new User("Marisol", "marisol@domain.com", LocalDate.of(2021, 6, 18));
-		User user5 = new User("Karen", "karen@domain.com", LocalDate.of(2021, 1, 1));
-		User user6 = new User("Carlos", "carlos@domain.com", LocalDate.of(2021, 7, 7));
-		User user7 = new User("Enrique", "enrique@domain.com", LocalDate.of(2021, 11, 12));
-		User user8 = new User("Luis", "luis@domain.com", LocalDate.of(2021, 2, 27));
-		User user9 = new User("Paola", "paola@domain.com", LocalDate.of(2021, 4, 10));
+		User user4 = new User("user1", "marisol@domain.com", LocalDate.of(2021, 6, 18));
+		User user5 = new User("user2", "karen@domain.com", LocalDate.of(2021, 1, 1));
+		User user6 = new User("user3", "carlos@domain.com", LocalDate.of(2021, 7, 7));
+		User user7 = new User("user4", "enrique@domain.com", LocalDate.of(2021, 11, 12));
+		User user8 = new User("user5", "luis@domain.com", LocalDate.of(2021, 2, 27));
+		User user9 = new User("user6", "paola@domain.com", LocalDate.of(2021, 4, 10));
 		List<User> users = Arrays.asList(user1, user2, user3, user4, user5, user6, user7, user8, user9);
 		users.forEach(userRepository::save); //Utilizar método save para guardar los datos en la base de datos
 	}
