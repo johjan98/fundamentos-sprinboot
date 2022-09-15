@@ -29,6 +29,7 @@ public class GeneralConfiguration {
     return new MyBeanWithPropertiesImplement(name, lastName, random);
   }
 
+  //Configuración base de datos
   @Bean
   public DataSource dataSource(){
     DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
