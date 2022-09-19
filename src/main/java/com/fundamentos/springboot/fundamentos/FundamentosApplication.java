@@ -78,7 +78,7 @@ public class FundamentosApplication implements CommandLineRunner {
             .forEach(user -> logger.info("findByNameOrEmail method: " + user));
 
     userRepository.findByNameOrEmail("Daniela", null)
-            .forEach(user -> logger.info("findByNameOrEmail method: " + user));*/
+            .forEach(user -> logger.info("findByNameOrEmail method: " + user));
 
 		userRepository
 						.findByBirthDateBetween(LocalDate.of(2021,6, 1), LocalDate.of(2021,7,30))
@@ -88,7 +88,11 @@ public class FundamentosApplication implements CommandLineRunner {
 						.forEach(user -> logger.info("findByNameLikeOrderByDesc method: " + user));
 
 		userRepository.findByNameContainingOrderByIdAsc("user")
-						.forEach(user -> logger.info("findByNameContainingOrderByIdAsc method: " + user));
+						.forEach(user -> logger.info("findByNameContainingOrderByIdAsc method: " + user));*/
+
+		logger.info("User from getAllByBirthDateAndEmail: "
+						+ userRepository.getAllByBirthDateAndEmail(LocalDate.of(2021, 9, 8), "daniela@domain.com")
+						.orElseThrow(() -> new RuntimeException("User nor found from getAllByBirthDateAndEmail")));
 	}
 
 	private void saveUsersInDataBase(){
