@@ -58,7 +58,7 @@ public class FundamentosApplication implements CommandLineRunner {
 	}
 
 	private void getInformationJpqlFromUser(){
-		logger.info("User: " +
+		/*logger.info("User: " +
 						userRepository.findByUserEmail("daniela@domain.com")
 						.orElseThrow(()-> new RuntimeException("No se encontro el usuario")));
 
@@ -67,14 +67,33 @@ public class FundamentosApplication implements CommandLineRunner {
 						.forEach(user -> logger.info("Usuario usando sort: " + user));
 
     userRepository.findByName("Daniela").forEach(user -> logger.info("FindByName method: " + user));
+
 		logger.info("FindByEmailAndName method: " +
 						userRepository.findByEmailAndName("marisol@domain.com", "user1")
 						.orElseThrow(()-> new RuntimeException("User not found")));
+
+		userRepository.findByNameLike("%u%").forEach(user -> logger.info("findByNameLike method: " + user));
+
+    userRepository.findByNameOrEmail(null, "daniela@domain.com")
+            .forEach(user -> logger.info("findByNameOrEmail method: " + user));
+
+    userRepository.findByNameOrEmail("Daniela", null)
+            .forEach(user -> logger.info("findByNameOrEmail method: " + user));*/
+
+		userRepository
+						.findByBirthDateBetween(LocalDate.of(2021,6, 1), LocalDate.of(2021,7,30))
+						.forEach(user -> logger.info("findByBirthDateBetween method: " + user));
+
+		userRepository.findByNameLikeOrderByIdDesc("%user%")
+						.forEach(user -> logger.info("findByNameLikeOrderByDesc method: " + user));
+
+		userRepository.findByNameContainingOrderByIdAsc("user")
+						.forEach(user -> logger.info("findByNameContainingOrderByIdAsc method: " + user));
 	}
 
 	private void saveUsersInDataBase(){
-		User user1 = new User("Johjan", "johjan@email.com", LocalDate.of(1998,8,22));
-		User user2 = new User("Stiven", "stiven@email.com", LocalDate.of(1998,9,12));
+		User user1 = new User("Johjan", "johjan@email.com", LocalDate.of(2021,8,22));
+		User user2 = new User("Stiven", "stiven@email.com", LocalDate.of(2021,9,12));
 		User user3 = new User("Daniela", "daniela@domain.com", LocalDate.of(2021, 9, 8));
 		User user4 = new User("user1", "marisol@domain.com", LocalDate.of(2021, 6, 18));
 		User user5 = new User("user2", "karen@domain.com", LocalDate.of(2021, 1, 1));
