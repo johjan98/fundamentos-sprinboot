@@ -26,6 +26,10 @@ public class User {
   public User() {
   }
 
+  public User(Long id) {
+    this.id = id;
+  }
+
   public User(String name, String email, LocalDate birthDate) {
     this.name = name;
     this.email = email;
